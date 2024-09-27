@@ -23,8 +23,8 @@ void parse_matrix(int *elements, int *rows, int *cols, char *raw_input, const ch
 	char *endptr;
 	while (row) {
 		*rows++;
-		while (*row = '\0') {
-			strtol(row, endptr, 10);
+		while (*row == '\0') {
+			strtol(row, &endptr, 10);
 			row += endptr - row;
 		}
 	}
