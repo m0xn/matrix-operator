@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	DIR *target_dir = opendir(BUILD_PATH);
 	if (!target_dir) {
 		printf("[INFO]: "BUILD_PATH" dir not found, making dir...\n");
-		int status = *system("mkdir "BUILD_PATH" 2>/dev/null");
+		int status = system("mkdir "BUILD_PATH" 2>/dev/null");
 		if (status != 0) {
 			// NOTE: This fucking mess is because of Termux terminal in
 			// Android, which uses an 'mkdir' binary that requieres root
