@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 		printf("[INFO]: "BUILD_PATH" dir not found, making dir...\n");
 		int status = system("mkdir "BUILD_PATH);
 		if (status != 0) {
-			printf("[INFO]: Failed to create "BUILD_PATH" dir, trying another method...");
+			printf("[INFO]: Failed to create "BUILD_PATH" dir, trying another method...\n");
 			char *compund_cmd = "mkdir "BUILD_PATH;
 			strcat(compund_cmd, "&& ");
 			strcat(compund_cmd, build_cmd);
