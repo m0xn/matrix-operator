@@ -3,7 +3,8 @@
 #include <string.h>
 #include "../lib/matrix.h"
 
-#define MAX_CHAR_COUNT 100
+#define MAX_CHAR_COUNT 180
+#define MAX_ARRAY_SIZE 25 // Support for 5x5 matrix for now 
 
 void rm_whitespace(char *src)
 {
@@ -21,67 +22,32 @@ void rm_whitespace(char *src)
 void parse_matrix(int *elements, int *rows, int *cols, char *raw_input, const char* delimiter) {
 	char *row = strtok(raw_input, delimiter);
 	char *endptr;
+	int i = 0;
 	while (row) {
-		*rows++;
-		while (*row == '\0') {
-			strtol(row, &endptr, 10);
-			row += endptr - row;
+		(*rows)++;
+		while (*row != '\0') {
+			elements[i++] = strtol(row, &endptr, 10);
+			row += *endptr == ',' || *endptr == '\n' ? endptr - row + 1 : endptr - row; 
 		}
+		row = strtok(NULL, delimiter);
 	}
+	*cols = i / *rows;
 }
 
 int main()
 {
-	/*size_t max_char_count = 180;*/
-	/*char *input = (char*)malloc(max_char_count);*/
-	/*printf("Introduce your matrix: ");*/
-	/*getline(&input, &max_char_count, stdin);*/
-	/*rm_whitespace(input);*/
-	/*printf("The resulting input is: %s\n", input);*/
-	/**/
-	/*Matrix m;*/
-	/*size_t max_char_count = MAX_CHAR_COUNT; */
-	/*char *matA = (char*)malloc(max_char_count);*/
-	/*const char *row_delim = ";";*/
-	/*printf("Introduce your matrix: ");*/
-	/*getline(&matA, &max_char_count, stdin);*/
-	/**/
-	/*// COMPLEX INPUT PARSER */
-	/*// Text preprocessor*/
-	/*int *elements = (int*)malloc(sizeof(int)*10);*/
-	/*int j = 0, k = 0;*/
-	/**/
-	/*// Parser*/
-	/*char *row = strtok(p_matA, row_delim);*/
-	/*int initial_length = strlen(row), current_length = strlen(row);*/
-	/*while (row) {*/
-	/*	if (initial_length != current_length) {*/
-	/*		fprintf(stderr, "[ERROR]: Inconsistent row elements\n");*/
-	/*		exit(1);*/
-	/*	}*/
-	/**/
-	/*	j++;*/
-	/*	char *endptr;*/
-	/*	while (*row != '\0') {*/
-	/*		if (*row == ',')*/
-	/*			row++;*/
-	/*		elements[k++] = strtol(row, &endptr, 10);*/
-	/*		row += endptr - row;*/
-	/*	}*/
-	/*	row = strtok(NULL, row_delim);*/
-	/*	current_length = row ? strlen(row) : 0;*/
-	/*}*/
-	/**/
-	/*printf("The numbers read from the input are:\n");*/
-	/*for (int i = 0; i < k; ++i)*/
-	/*	printf("%d\n", elements[i]);*/
-	/**/
-	/*int rows = j, cols = k/j;*/
-	/*printf("The dimension of the parsed matrix is: %dx%d\n", j, k/j);*/
-	/**/
-	/*init_matrix(&m, rows, cols, elements);*/
-	/*print_matrix(&m);*/
-	/**/
-	/*free(p_matA);*/
+	char *input = (char*)malloc(MAX_CHAR_COUNT);
+	int *elements = (int*)malloc(sizeof(int)*MAX_ARRAY_SIZE);
+	size_t max_input_size = MAX_CHAR_COUNT;
+	int rows = 0, cols = 0;
+
+	printf("Introduce your matrix (elements are separated by ',' and rows by ';'):\n");
+	getline(&input, &max_input_size, stdin);
+	rm_whitespace(input);
+	parse_matrix(elements, &rows, &cols, input, ";");
+
+	Matrix m;
+	init_matrix(&m, rows, cols, elements);
+	print_matrix(&m);
 	return 0;
 }
