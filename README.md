@@ -8,6 +8,7 @@ This is intended to be a small scope project, and the goals I'd like to achieve 
 - [ ] Matrix API
     - [x] Init matrix
     - [x] Parse matrix
+    - [x] Copy matrix
     - [x] Identity matrix
     - [x] Pretty print matrix
     - [x] Check if a matrix is symmetric
