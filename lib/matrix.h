@@ -58,6 +58,16 @@ void init_matrix(Matrix *m_ref, int rows, int cols, int *elements)
 	}
 }
 
+void fill_matrix(Matrix *m_ref, int rows, int cols, int num, FillMode fm, int step)
+{
+	int *elements = (int*)malloc(sizeof(int)*rows*cols);
+
+	for (int i = 0; i < rows*cols; ++i)
+		elements[i] = num + fm*i*step;
+
+	init_matrix(m_ref, rows, cols, elements);
+}
+
 void print_matrix(Matrix m_ref)
 {
 	int max = max_element(m_ref);
@@ -76,6 +86,15 @@ void print_matrix(Matrix m_ref)
 				printf("\n");
 		}
 	}
+}
+
+void copy_matrix(Matrix *dst, Matrix src)
+{
+	fill_matrix(dst, src.rows, src.cols, 0, CONSTANT, 0);
+
+	for (int i = 0; i < src.rows; ++i)
+		for (int j = 0; j < src.cols; ++j)
+			dst->elements[i][j] = src.elements[i][j];
 }
 
 bool square_matrix(Matrix m_ref) { return m_ref.cols == m_ref.rows; }
@@ -110,16 +129,6 @@ void triangulate_matrix(Matrix *m_ref, Triangulation tr)
 			}
 		}
 	}
-}
-
-void fill_matrix(Matrix *m_ref, int rows, int cols, int num, FillMode fm, int step)
-{
-	int *elements = (int*)malloc(sizeof(int)*rows*cols);
-
-	for (int i = 0; i < rows*cols; ++i)
-		elements[i] = num + fm*i*step;
-
-	init_matrix(m_ref, rows, cols, elements);
 }
 
 void diagonalize_matrix(Matrix *m_ref)
