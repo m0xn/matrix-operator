@@ -10,6 +10,12 @@ typedef enum {
 	LOWER
 } Triangulation; 
 
+typedef enum {
+	COSNTANT = 0,
+	INCREMENT = 1,
+	DECREMENT = -1
+} FillMode;
+
 void init_matrix(Matrix *m_ref, int rows, int cols, int *elements)
 {
 	m_ref->rows = rows;
@@ -59,12 +65,22 @@ void triangulate_matrix(Matrix *m_ref, Triangulation tr)
 			}
 		}
 	} else {
-		for (int i = m_ref->rows-1; i >= 0; --i) {
-			for (int j = m_ref->cols; j > i; --j) {
+		for (int i = m_ref->rows-2; i >= 0; --i) {
+			for (int j = m_ref->cols-1; j > i; --j) {
 				m_ref->elements[i][j] = 0;
 			}
 		}
 	}
+}
+
+void fill_matrix(Matrix *m_ref, int num, int rows, int cols, FillMode fm)
+{
+	int *elements = (int*)malloc(sizeof(int)*rows*cols);
+
+	for (int i = 0; i < rows*cols; ++i)
+		elements[i] = num + fm*i;
+
+	init_matrix(m_ref, rows, cols, elements);
 }
 
 bool symmetric_matrix(Matrix m_ref)
@@ -82,4 +98,3 @@ bool symmetric_matrix(Matrix m_ref)
 
 	return output;
 }
-
