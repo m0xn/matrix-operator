@@ -16,6 +16,32 @@ typedef enum {
 	DECREMENT = -1
 } FillMode;
 
+int max_element(Matrix m_ref)
+{
+	int max = m_ref.elements[0][0];
+
+	for (int i = 0; i < m_ref.rows; ++i)
+		for (int j = 0; j < m_ref.cols; ++j)
+			max = m_ref.elements[i][j] > max 
+				? m_ref.elements[i][j]
+				: max;
+
+	return max;
+}
+
+int min_element(Matrix m_ref)
+{
+	int min = m_ref.elements[0][0];
+
+	for (int i = 0; i < m_ref.rows; ++i)
+		for (int j = 0; j < m_ref.cols; ++j)
+			min = m_ref.elements[i][j] < min 
+				? m_ref.elements[i][j]
+				: min;
+
+	return min;
+}
+
 void init_matrix(Matrix *m_ref, int rows, int cols, int *elements)
 {
 	m_ref->rows = rows;
@@ -32,9 +58,20 @@ void init_matrix(Matrix *m_ref, int rows, int cols, int *elements)
 
 void print_matrix(Matrix m_ref)
 {
+	int max = max_element(m_ref);
+	int min = min_element(m_ref);
+	int digits = min < 0 
+		? (int)trunc(log10(max)) + 2 // Account for negative sign paddinfor negative sign paddingg
+		: (int)trunc(log10(max)) + 1;
+
+	char *format = (char*)malloc(digits+5);
+	sprintf(format, "%%%dd, ", digits);
+	
 	for (int i = 0; i < m_ref.rows; ++i) {
 		for (int j = 0; j < m_ref.cols; ++j) {
-			printf(j == m_ref.cols - 1 ? "%d\n" : "%d, ", m_ref.elements[i][j]);
+			printf(format, m_ref.elements[i][j]);
+			if (j == m_ref.cols - 1)
+				printf("\n");
 		}
 	}
 }
@@ -82,6 +119,7 @@ void fill_matrix(Matrix *m_ref, int num, int rows, int cols, FillMode fm)
 
 	init_matrix(m_ref, rows, cols, elements);
 }
+
 
 bool symmetric_matrix(Matrix m_ref)
 {
