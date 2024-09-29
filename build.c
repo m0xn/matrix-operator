@@ -12,8 +12,8 @@ int main(int argc, char **argv)
 {
 	bool debug = argv[1] != NULL && strcmp(argv[1], "debug") == 0;
 	char *build_cmd = debug 
-		? "clang -g "SRC_PATH"/main.c -o "BUILD_PATH"/main"
-		: "clang "SRC_PATH"/main.c -o "BUILD_PATH"/main";
+		? "clang -g "SRC_PATH"/main.c -o "BUILD_PATH"/main -lm"
+		: "clang "SRC_PATH"/main.c -o "BUILD_PATH"/main -lm";
 
 	DIR *target_dir = opendir(BUILD_PATH);
 	if (!target_dir) {
