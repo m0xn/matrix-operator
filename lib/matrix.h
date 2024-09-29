@@ -11,7 +11,7 @@ typedef enum {
 } Triangulation; 
 
 typedef enum {
-	COSNTANT = 0,
+	CONSTANT = 0,
 	INCREMENT = 1,
 	DECREMENT = -1
 } FillMode;
@@ -110,16 +110,27 @@ void triangulate_matrix(Matrix *m_ref, Triangulation tr)
 	}
 }
 
-void fill_matrix(Matrix *m_ref, int num, int rows, int cols, FillMode fm)
+void fill_matrix(Matrix *m_ref, int num, int rows, int cols, FillMode fm, int step)
 {
 	int *elements = (int*)malloc(sizeof(int)*rows*cols);
 
 	for (int i = 0; i < rows*cols; ++i)
-		elements[i] = num + fm*i;
+		elements[i] = num + fm*i*step;
 
 	init_matrix(m_ref, rows, cols, elements);
 }
 
+void diagonlize_matrix(Matrix *m_ref)
+{
+	if (!square_matrix(*m_ref)) {
+		fprintf(stderr, "[ERROR]: Matrix must be square (%d != %d)", m_ref->rows, m_ref->cols);
+		return;
+	}
+
+	for (int i = 1; i < m_ref->rows; ++i)
+		for (int j = 0; j < i; ++j)
+			m_ref->elements[i][j] = m_ref->elements[j][i] = 0;
+}
 
 bool symmetric_matrix(Matrix m_ref)
 {
@@ -129,10 +140,9 @@ bool symmetric_matrix(Matrix m_ref)
 	}
 
 	bool output;
-	for (int i = 0; i < m_ref.rows - 1; ++i) {
-		int j = i + 1;
-		output = m_ref.elements[i][j] == m_ref.elements[j][i];
-	}
+	for (int i = 1; i < m_ref.rows; ++i)
+		for (int j = 0; j < i; ++j)
+			output = m_ref.elements[i][j] == m_ref.elements[j][i];
 
 	return output;
 }
