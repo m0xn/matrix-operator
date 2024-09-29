@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "../lib/matrix.h"
 
 #define MAX_CHAR_COUNT 180
@@ -48,6 +49,16 @@ int main()
 
 	Matrix m;
 	init_matrix(&m, rows, cols, elements);
-	print_matrix(&m);
+	/*print_matrix(m);*/
+
+	/*Matrix i;*/
+	/*int order;*/
+	/*printf("Introduce the order of the identity matrix: ");*/
+	/*scanf("%d", &order);*/
+	/*identity_matrix(&i, order);*/
+	triangulate_matrix(&m, UPPER);
+	print_matrix(m);
+	/*bool output = symmetric_matrix(m);*/
+	/*printf("The matrix is: %s\n", output ? "Symmetric" : "Non-symmetric");*/
 	return 0;
 }
