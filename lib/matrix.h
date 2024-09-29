@@ -151,6 +151,7 @@ bool symmetric_matrix(Matrix m_ref)
 
 Matrix add_matrices(Matrix m, Matrix n, bool substract) {
 	Matrix result;
+	fill_matrix(&result, m.rows, m.cols, 0, CONSTANT, 0);
 
 	if (!eq_dim_matrices(m, n)) {
 		fprintf(stderr, "[ERROR]: Matrices don't have the same dimensions");
@@ -163,5 +164,25 @@ Matrix add_matrices(Matrix m, Matrix n, bool substract) {
 					? m.elements[i][j] - n.elements[i][j]
 					: m.elements[i][j] + n.elements[i][j];
 	
+	return result;
+}
+
+Matrix mult_matrices(Matrix m, Matrix n) {
+	Matrix result;
+	fill_matrix(&result, m.rows, n.cols, 0, CONSTANT, 0);
+
+	if (m.cols != n.rows) {
+		fprintf(stderr, "[ERROR]: Matrices doesn't have compatible dimensions (%d != %d)", m.rows, n.cols);
+		return result;
+	}
+
+	for (int i = 0; i < m.rows; ++i) {
+		for (int j = 0; j < n.cols; ++j) {
+			for (int k = 0; k < n.rows; ++k) {
+				result.elements[i][j] += m.elements[i][k] * n.elements[k][j];
+			}
+		}
+	}
+
 	return result;
 }
