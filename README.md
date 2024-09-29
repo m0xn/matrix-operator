@@ -15,5 +15,5 @@ This is intended to be a small scope project, and the goals I'd like to achieve 
     - [x] Matrix fill method (w/ fill mode, step) 
     - [x] Diagonalize matrix
     - [x] Add/Substract matrices
-    - [ ] Product matrix
+    - [x] Product matrix
     - [ ] Matrix determinant
