@@ -7,9 +7,36 @@
 
 #define SRC_PATH "src"
 #define BUILD_PATH "target"
+#define DEMOS_PATH "demos"
 
 int main(int argc, char **argv)
 {
+	// TODO: Implement a better build system to support demos 
+	if (argv[1] != NULL && strcmp(argv[1], "demos") == 0) {
+		DIR *demos_dir = opendir(DEMOS_PATH);
+
+		if (!demos_dir) {
+			fprintf(stderr, "[ERROR]: Could not open "DEMOS_PATH"/ directory");
+			exit(1);
+		}
+
+		struct dirent *entry;
+		while ((entry = readdir(demos_dir))) {
+			if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0 || !strstr(entry->d_name, ".c"))
+				continue;
+
+			const char *delimiter = ".";
+			const char *filename = strtok(entry->d_name, delimiter);
+			char *build_cmd = (char*)malloc(512);
+			sprintf(build_cmd, "clang "DEMOS_PATH"/%s.c -o "DEMOS_PATH"/%s -lm", filename, filename);
+			printf("[INFO]: %s\n", build_cmd);
+			system(build_cmd);
+			free(build_cmd);
+		}
+
+		exit(0);
+	}
+
 	bool debug = argv[1] != NULL && strcmp(argv[1], "debug") == 0;
 	char *build_cmd = debug 
 		? "clang -g "SRC_PATH"/main.c -o "BUILD_PATH"/main -lm"
