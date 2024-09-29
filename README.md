@@ -9,9 +9,11 @@ This is intended to be a small scope project, and the goals I'd like to achieve 
     - [x] Init matrix
     - [x] Parse matrix
     - [x] Identity matrix
+    - [x] Pretty print matrix
     - [x] Check if a matrix is symmetric
     - [x] Triangulate matrix (upper and lower)
-    - [ ] Diagonalize matrix
+    - [x] Matrix fill method (w/ fill mode, step) 
+    - [x] Diagonalize matrix
     - [ ] Add/Substract matrices
     - [ ] Product matrix
     - [ ] Matrix determinant
