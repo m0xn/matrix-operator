@@ -42,6 +42,8 @@ int min_element(Matrix m_ref)
 	return min;
 }
 
+bool eq_dim_matrices(Matrix m, Matrix n) { return m.rows == n.rows && m.cols == n.cols; }
+
 void init_matrix(Matrix *m_ref, int rows, int cols, int *elements)
 {
 	m_ref->rows = rows;
@@ -110,7 +112,7 @@ void triangulate_matrix(Matrix *m_ref, Triangulation tr)
 	}
 }
 
-void fill_matrix(Matrix *m_ref, int num, int rows, int cols, FillMode fm, int step)
+void fill_matrix(Matrix *m_ref, int rows, int cols, int num, FillMode fm, int step)
 {
 	int *elements = (int*)malloc(sizeof(int)*rows*cols);
 
@@ -120,7 +122,7 @@ void fill_matrix(Matrix *m_ref, int num, int rows, int cols, FillMode fm, int st
 	init_matrix(m_ref, rows, cols, elements);
 }
 
-void diagonlize_matrix(Matrix *m_ref)
+void diagonalize_matrix(Matrix *m_ref)
 {
 	if (!square_matrix(*m_ref)) {
 		fprintf(stderr, "[ERROR]: Matrix must be square (%d != %d)", m_ref->rows, m_ref->cols);
@@ -145,4 +147,21 @@ bool symmetric_matrix(Matrix m_ref)
 			output = m_ref.elements[i][j] == m_ref.elements[j][i];
 
 	return output;
+}
+
+Matrix add_matrices(Matrix m, Matrix n, bool substract) {
+	Matrix result;
+
+	if (!eq_dim_matrices(m, n)) {
+		fprintf(stderr, "[ERROR]: Matrices don't have the same dimensions");
+		return result;
+	}
+
+	for (int i = 0; i < m.rows; ++i)
+		for (int j = 0; j < m.cols; ++j)
+			result.elements[i][j] = substract
+					? m.elements[i][j] - n.elements[i][j]
+					: m.elements[i][j] + n.elements[i][j];
+	
+	return result;
 }
