@@ -195,3 +195,15 @@ Matrix mult_matrices(Matrix m, Matrix n) {
 
 	return result;
 }
+
+Matrix scalar_mult(Matrix m, int scalar)
+{
+	Matrix result;
+	fill_matrix(&result, m.rows, m.cols, 0, CONSTANT, 0);
+
+	for (int i = 0; i < m.rows; ++i)
+		for (int j = 0; j < m.cols; ++j)
+			result.elements[i][j] = m.elements[i][j] * scalar;
+
+	return result;
+}
