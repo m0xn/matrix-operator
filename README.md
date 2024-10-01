@@ -17,4 +17,5 @@ This is intended to be a small scope project, and the goals I'd like to achieve 
     - [x] Diagonalize matrix
     - [x] Add/Substract matrices
     - [x] Product matrix
+    - [x] Scalar product
     - [ ] Matrix determinant
