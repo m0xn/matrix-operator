@@ -72,9 +72,15 @@ void print_matrix(Matrix m_ref)
 {
 	int max = max_element(m_ref);
 	int min = min_element(m_ref);
-	int digits = min < 0 
-		? (int)trunc(log10(max)) + 2 // Account for negative sign paddinfor negative sign paddingg
-		: (int)trunc(log10(max)) + 1;
+	int digits;
+
+	if (max == 0) {
+		digits = 1; // Account for null matrices
+	} else if (min < 0 || max < 0) {
+		digits = (int)trunc(log10(max)) + 2; // Negative padding
+	} else {
+		digits = (int)trunc(log10(max)) + 1;
+	}
 
 	char *format = (char*)malloc(digits+5);
 	sprintf(format, "%%%dd, ", digits);
