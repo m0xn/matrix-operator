@@ -1,21 +1,23 @@
-# Matrix operator
-Basic program to operate with matrices written in C.
+# Matrix operator (float-implementation)
+Another branch of development for this repo in order to support floats inside of matrices, as well as for
+enhancing the overall architecture of the API. 
 
 ## Goals
 This is intended to be a small scope project, and the goals I'd like to achieve with it are the following:
-- [x] Define the Matrix structure
-- [x] Create stdin Matrix parser
 - [ ] Matrix API
-    - [x] Init matrix
-    - [x] Parse matrix
-    - [x] Copy matrix
-    - [x] Identity matrix
-    - [x] Pretty print matrix
-    - [x] Check if a matrix is symmetric
-    - [x] Triangulate matrix (upper and lower)
-    - [x] Matrix fill method (w/ fill mode, step) 
-    - [x] Diagonalize matrix
-    - [x] Add/Substract matrices
-    - [x] Product matrix
-    - [x] Scalar product
-    - [ ] Matrix determinant
+    - [ ] Matrix structure defintion
+    - [ ] Matrix initialization
+    - [ ] Matrix duplication
+    - [ ] Matrix fill function
+    - [ ] Matrix triangulation function
+    - [ ] Matrix diagonalization function
+    - [ ] Matrix sum
+    - [ ] Matrix product
+    - [ ] Scalar product
+    - [ ] Inverse matrix calculation
+    - [ ] Adjugate matrix calculation
+- [ ] Determinant API
+    -  [ ] 2x2 determinant resolution
+    -  [ ] 3x3 determinant resolution (Sarru's Rule)
+    -  [ ] determinant order reducer function 
+- [ ] Symbolic analizer
